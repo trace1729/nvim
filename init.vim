@@ -106,10 +106,8 @@ augroup NVIMRC
     autocmd BufWritePost *.nvimrc exec ":so %"
 augroup END
 " Undo operations
-noremap l u
+" noremap l u
 " Insert Key
-noremap k i
-noremap K I
 " Copy to system clipboard
 vnoremap Y "+y
 " Find pair
@@ -135,25 +133,29 @@ inoremap <c-y> <ESC>A {}<ESC>i<CR><ESC>ko
 " < n   i >
 "     e
 "     v
-noremap <silent> u k
-noremap <silent> n h
-noremap <silent> e j
-noremap <silent> i l
-noremap <silent> gu gk
-noremap <silent> ge gj
-noremap <silent> \v v$h
+noremap <silent> i k
+noremap <silent> j h
+noremap <silent> k j
+noremap <silent> z i
+noremap <silent> K 5j
+noremap <silent> J 7h
+noremap <silent> L 7l
+noremap <silent> Z I
+noremap <silent> ; :
+" vnoremap ; :
+vnoremap ' "
+
 " U/E keys for 5 times u/e (faster navigation)
-noremap <silent> U 5k
-noremap <silent> E 5j
+noremap <silent> I 5k
+noremap <silent> K 5j
 " N key: go to the start of the line
-noremap <silent> N 0
+noremap <silent> J 0
 " I key: go to the end of the line
-noremap <silent> I $
+noremap <silent> E $
 " Faster in-line navigation
 noremap W 5w
 noremap B 5b
 " set h (same as n, cursor left) to 'end of word'
-noremap h e
 " Ctrl + U or E will move up/down the view port without moving the cursor
 noremap <C-U> 5<C-y>
 noremap <C-E> 5<C-e>
@@ -180,25 +182,22 @@ cnoremap <M-w> <S-Right>
 
 " ==================== Window management ====================
 " Use <space> + new arrow keys for moving the cursor around windows
-noremap <LEADER>w <C-w>w
-noremap <LEADER>u <C-w>k
-noremap <LEADER>e <C-w>j
-noremap <LEADER>n <C-w>h
-noremap <LEADER>i <C-w>l
+"noremap <LEADER>i <C-w>w
+noremap <SPACE><up>   <C-w>k
+noremap <SPACE><left>  <C-w>h
+noremap <SPACE><down>  <C-w>j
+noremap <SPACE><right> <C-w>l
 noremap qf <C-w>o
 " Disable the default s key
 noremap s <nop>
+
 " split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
-noremap su :set nosplitbelow<CR>:split<CR>:set splitbelow<CR>
-noremap se :set splitbelow<CR>:split<CR>
-noremap sn :set nosplitright<CR>:vsplit<CR>:set splitright<CR>
-noremap si :set splitright<CR>:vsplit<CR>
-" Resize splits with arrow keys
-noremap <up> :res +5<CR>
-noremap <down> :res -5<CR>
-noremap <left> :vertical resize-5<CR>
-noremap <right> :vertical resize+5<CR>
-" Place the two screens up and down
+map sr :set splitright<CR>:vsplit<CR>
+map sl :set nosplitright<CR>:vsplit<CR>
+map su :set nosplitbelow<CR>:split<CR>
+map sd :set splitbelow<CR>:split<CR>
+
+"" Place the two screens up and down
 noremap sh <C-w>t<C-w>K
 " Place the two screens side by side
 noremap sv <C-w>t<C-w>H
@@ -211,15 +210,11 @@ noremap <LEADER>q <C-w>j:q<CR>
 
 " ==================== Tab management ====================
 " Create a new tab with tu
-noremap tu :tabe<CR>
-noremap tU :tab split<CR>
-" Move around tabs with tn and ti
-noremap tn :-tabnext<CR>
-noremap ti :+tabnext<CR>
-" Move the tabs with tmn and tmi
-noremap tmn :-tabmove<CR>
-noremap tmi :+tabmove<CR>
-
+map tn :tabnew<CR>
+map tl :tabnext<CR>
+map th :tabprevious<CR>
+map t0 :tablast<CR>
+map t$ :tabfirst<CR>
 
 " ==================== Markdown Settings ====================
 " Snippets
@@ -349,8 +344,9 @@ Plug 'pechorin/any-jump.vim'
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
 
 " Auto Complete
-Plug 'neoclide/coc.nvim', {'commit': '63dd239bfe02998810b39d039827e2510885b57b'}
+"Plug 'neoclide/coc.nvim', {'commit': '63dd239bfe02998810b39d039827e2510885b57b'}
 " Plug 'neoclide/coc.nvim', {'branch': 'release', 'tag': 'v0.0.79'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wellle/tmux-complete.vim'
 
 " Snippets
@@ -550,7 +546,6 @@ let g:coc_global_extensions = [
 	\ 'coc-sourcekit',
 	\ 'coc-stylelint',
 	\ 'coc-syntax',
-	\ 'https://github.com/theniceboy/coc-tailwindcss',
 	\ 'coc-tasks',
 	\ 'coc-translator',
 	\ 'coc-tsserver',
@@ -764,10 +759,10 @@ let g:calendar_google_task = 1
 augroup calendar-mappings
 	autocmd!
 	" diamond cursor
-	autocmd FileType calendar nmap <buffer> u <Plug>(calendar_up)
-	autocmd FileType calendar nmap <buffer> n <Plug>(calendar_left)
-	autocmd FileType calendar nmap <buffer> e <Plug>(calendar_down)
-	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_right)
+	autocmd FileType calendar nmap <buffer> i <Plug>(calendar_up)
+	autocmd FileType calendar nmap <buffer> j <Plug>(calendar_left)
+	autocmd FileType calendar nmap <buffer> k <Plug>(calendar_down)
+	autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
 	autocmd FileType calendar nmap <buffer> <c-u> <Plug>(calendar_move_up)
 	autocmd FileType calendar nmap <buffer> <c-n> <Plug>(calendar_move_left)
 	autocmd FileType calendar nmap <buffer> <c-e> <Plug>(calendar_move_down)
@@ -951,9 +946,9 @@ let g:move_key_modifier = 'C'
 
 
 " ==================== any-jump ====================
-nnoremap j :AnyJump<CR>
-let g:any_jump_window_width_ratio  = 0.8
-let g:any_jump_window_height_ratio = 0.9
+"nnoremap j :AnyJump<CR>
+"let g:any_jump_window_width_ratio  = 0.8
+"let g:any_jump_window_height_ratio = 0.9
 
 
 " ==================== typescript-vim ====================
@@ -1025,9 +1020,10 @@ noremap <silent> <C-f> :Rg<CR>
 noremap <silent> <C-h> :FzfLua oldfiles cwd=~<CR>
 noremap <silent> <C-q> :FzfLua builtin<CR>
 noremap <silent> <C-t> :FzfLua lines<CR>
+
 " noremap <silent> <C-x> :FzfLua resume<CR>
-noremap <silent> z= :FzfLua spell_suggest<CR>
-noremap <silent> <C-w> :FzfLua buffers<CR>
+"noremap <silent> z= :FzfLua spell_suggest<CR>
+" noremap <silent> <C-w> :FzfLua buffers<CR>
 noremap <leader>; :History:<CR>
 augroup fzf_commands
   autocmd!
