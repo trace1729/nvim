@@ -25,7 +25,7 @@ if empty(glob($HOME.'/.config/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location 
+" Create a _machine_specific.vim file to adjust machine specific stuff, like python interpreter location
 let has_machine_specific_file = 1
 if empty(glob('~/.config/nvim/_machine_specific.vim'))
 	let has_machine_specific_file = 0
@@ -129,9 +129,9 @@ inoremap <c-y> <ESC>A {}<ESC>i<CR><ESC>ko
 " ==================== Cursor Movement ====================
 " New cursor movement (the default arrow keys are used for resizing windows)
 "     ^
-"     u
-" < n   i >
-"     e
+"     i
+" < j   l >
+"     k
 "     v
 noremap <silent> i k
 noremap <silent> j h
@@ -142,6 +142,10 @@ noremap <silent> J 7h
 noremap <silent> L 7l
 noremap <silent> Z I
 noremap <silent> ; :
+
+" visual block mode
+noremap <silent> <C-a> <C-v>
+
 " vnoremap ; :
 vnoremap ' "
 
@@ -160,13 +164,15 @@ noremap B 5b
 noremap <C-U> 5<C-y>
 noremap <C-E> 5<C-e>
 " Custom cursor movement
-source $HOME/.config/nvim/cursor.vim
+" source $HOME/.config/nvim/cursor.vim
 " If you use Qwerty keyboard, uncomment the next line.
-" source $HOME/nvim/cursor_for_qwerty.vim
+source $HOME/.config/nvim/cursor_for_qwerty.vim
 
 
 " ==================== Insert Mode Cursor Movement ====================
 inoremap <C-a> <ESC>A
+inoremap jj <ESC>
+
 
 
 " ==================== Command Mode Cursor Movement ====================
@@ -238,7 +244,7 @@ noremap <C-c> zz
 " Auto change directory to current dir
 autocmd BufEnter * silent! lcd %:p:h
 " Call figlet
-noremap tx :r !figlet 
+noremap tx :r !figlet
 " find and replace
 noremap \s :%s//g<left><left>
 " set wrap
@@ -285,10 +291,9 @@ func! CompileRunGcc()
 	elseif &filetype == 'html'
 		silent! exec "!".g:mkdp_browser." % &"
 	elseif &filetype == 'markdown'
-		exec "InstantMarkdownPreview"
+		exec "MarkdownPreview"
 	elseif &filetype == 'tex'
-		silent! exec "VimtexStop"
-		silent! exec "VimtexCompile"
+        term zathura %<.pdf
 	elseif &filetype == 'dart'
 		exec "CocCommand flutter.run -d ".g:flutter_default_device." ".g:flutter_run_args
 		silent! exec "CocCommand flutter.dev.openDevLog"
@@ -337,8 +342,9 @@ Plug 'ibhagwan/fzf-lua'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'kevinhwang91/rnvimr'
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 Plug 'pechorin/any-jump.vim'
+
 
 " Debugger
 " Plug 'puremourning/vimspector', {'do': './install_gadget.py --enable-c --enable-python --enable-go'}
@@ -396,7 +402,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'pantharshit00/vim-prisma'
 
 " Go
-Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
+"Plug 'fatih/vim-go' , { 'for': ['go', 'vim-plug'], 'tag': '*' }
 
 " Python
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
@@ -407,14 +413,15 @@ Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 "Plug 'tmhedberg/SimpylFold', { 'for' :['python', 'vim-plug'] }
 
 " Dart
-Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart', 'vim-plug'] }
+" Plug 'dart-lang/dart-vim-plugin', { 'for': ['dart', 'vim-plug'] }
 
 " Swift
-Plug 'keith/swift.vim'
-Plug 'arzg/vim-swift'
+"Plug 'keith/swift.vim'
+" Plug 'arzg/vim-swift'
 
 " Markdown
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
 Plug 'dkarter/bullets.vim'
@@ -483,12 +490,20 @@ Plug 'kyazdani42/nvim-web-devicons'
 
 " Other useful utilities
 Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
+
+" modified by trace 1729
 " Plug 'makerj/vim-pdf'
+Plug 'sainnhe/sonokai'
+Plug 'yegappan/mru'
+Plug 'nvim-orgmode/orgmode'
+" Plug 'mhinz/vim-startify'
 
 call plug#end()
 
 set re=0
 
+nnoremap ,s :source $MYVIMRC<cr>
+nnoremap ,,i :PlugInstall<cr>
 
 " ==================== Dress up my vim ====================
 set termguicolors " enable true colors support
@@ -552,7 +567,13 @@ let g:coc_global_extensions = [
 	\ 'coc-vetur',
 	\ 'coc-vimlsp',
 	\ 'coc-yaml',
-	\ 'coc-yank']
+	\ 'coc-rust-analyzer',
+	\ 'coc-go',
+	\ 'coc-sumneko-lua',
+	\ 'coc-phpls',
+	\ 'coc-yank',
+	\ 'coc-texlab']
+
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<Tab>" :
@@ -568,6 +589,7 @@ function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
 inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <silent><expr> <c-o> coc#refresh()
 function! Show_documentation()
@@ -621,22 +643,114 @@ nmap <leader>aw  <Plug>(coc-codeaction-selected)w
 " coc-tasks
 noremap <silent> <leader>ts :CocList tasks<CR>
 " coc-snippets
+"
 imap <C-l> <Plug>(coc-snippets-expand)
 vmap <C-e> <Plug>(coc-snippets-select)
-let g:coc_snippet_next = '<c-e>'
-let g:coc_snippet_prev = '<c-n>'
+let g:coc_snippet_next = '<c-j>'
+let g:coc_snippet_prev = '<c-k>'
 imap <C-e> <Plug>(coc-snippets-expand-jump)
 autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
 
 
-" ==================== vim-instant-markdown ====================
-let g:instant_markdown_slow = 0
-let g:instant_markdown_autostart = 0
-" let g:instant_markdown_open_to_the_world = 1
-" let g:instant_markdown_allow_unsafe_content = 1
-" let g:instant_markdown_allow_external_content = 0
-" let g:instant_markdown_mathjax = 1
-let g:instant_markdown_autoscroll = 1
+" ==================== vim-markdown-preview ====================
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
+
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
+
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
+
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" for path with space
+" valid: `/path/with\ space/xxx`
+" invalid: `/path/with\\ space/xxx`
+" default: ''
+let g:mkdp_browser = ''
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+" content_editable: if enable content editable for preview page, default: v:false
+" disable_filename: if disable filename header for preview page, default: 0
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {},
+    \ 'content_editable': v:false,
+    \ 'disable_filename': 0,
+    \ 'toc': {}
+    \ }
+
+" use a custom markdown style must be absolute path
+" like '/Users/username/markdown.css' or expand('~/markdown.css')
+let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
+" like '/Users/username/highlight.css' or expand('~/highlight.css')
+let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or empty for random
+let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+
+" recognized filetypes
+" these filetypes will have MarkdownPreview... commands
+let g:mkdp_filetypes = ['markdown']
+
+" set default theme (dark or light)
+" By default the theme is define according to the preferences of the system
+let g:mkdp_theme = 'light'
 
 
 " ==================== vim-table-mode ====================
@@ -975,6 +1089,8 @@ EOF
 endif
 
 
+
+
 " ==================== nvim-scrollbar ====================
 if g:nvim_plugins_installation_completed == 1
 lua <<EOF
@@ -1018,7 +1134,7 @@ noremap g# g#<Cmd>lua require('hlslens').start()<CR>
 noremap <silent> <C-p> :FzfLua files<CR>
 noremap <silent> <C-f> :Rg<CR>
 noremap <silent> <C-h> :FzfLua oldfiles cwd=~<CR>
-noremap <silent> <C-q> :FzfLua builtin<CR>
+" noremap <silent> <C-q> :FzfLua builtin<CR>
 noremap <silent> <C-t> :FzfLua lines<CR>
 
 " noremap <silent> <C-x> :FzfLua resume<CR>
@@ -1173,15 +1289,13 @@ EOF
 endif
 
 " ==================== copilot.nvim ====================
-let g:copilot_enabled = 1
-nnoremap <silent> <leader>go :Copilot<CR>
-nnoremap <silent> <leader>ge :Copilot enable<CR>
-nnoremap <silent> <leader>gd :Copilot disable<CR>
-" inoremap <c-p> <Plug>(copilot-suggest)
-imap <silent><script><expr> <C-C> copilot#Accept("")
-let g:copilot_no_tab_map = v:true
-inoremap <c-n> <Plug>(copilot-next)
-inoremap <c-l> <Plug>(copilot-previous)
+"let g:copilot_enabled = 1
+"nnoremap <silent> <leader>go :Copilot<CR>
+"nnoremap <silent> <leader>ge :Copilot enable<CR>
+"nnoremap <silent> <leader>gd :Copilot disable<CR>
+"" inoremap <c-p> <Plug>(copilot-suggest)
+"imap <silent><script><expr> <C-C> copilot#Accept("")
+"let g:copilot_no_tab_map = v:true
 
 
 " ==================== nvim-colorizer.lua ====================
@@ -1245,3 +1359,85 @@ if has_machine_specific_file == 0
 	exec "e ~/.config/nvim/_machine_specific.vim"
 endif
 
+
+" ==================== latex ====================
+
+"let g:tex_flavor = "latex"
+"
+" ==================== sql ====================
+"
+let g:LanguageClient_serverCommands = {
+    \ 'sql': ['sql-language-server', 'up', '--method', 'stdio'],
+    \ }
+
+
+
+"==============
+"== wsl-copy
+"==============
+
+if &compatible || exists('g:loaded_wsl_copy_paste')
+  finish
+endif
+
+if !(has('unix') && exists('$WSLENV'))
+  finish
+endif
+
+" To send to clipboard {{{
+if executable('clip.exe')
+  function! SetClip(type, ...) abort
+    if a:0
+      " Visual mode
+      normal! gv"+y
+    elseif a:type ==# 'line'
+      normal! '[V']"+y
+    elseif a:type ==# 'char'
+      normal! `[v`]"+y
+    endif
+
+    " From https://stackoverflow.com/questions/44480829/how-to-copy-to-clipboard-in-vim-of-bash-on-windows/50281147#50281147
+    call system('clip.exe', @+)
+  endfunction
+
+  nnoremap <silent> cy      :set operatorfunc=SetClip<cr>g@
+  xnoremap <silent> Y       :<C-U>call SetClip(visualmode(),1)<cr>
+endif
+" }}}
+
+
+let g:loaded_wsl_copy_paste = 1
+
+colorscheme sonokai
+
+"============
+"=== vim-mru
+"============
+noremap <silent> <leader>rf :MRU<CR>
+
+"============
+"=== org mode
+"============
+lua << EOF
+
+-- Load custom treesitter grammar for org filetype
+require('orgmode').setup_ts_grammar()
+
+-- Treesitter configuration
+require('nvim-treesitter.configs').setup {
+  -- If TS highlights are not enabled at all, or disabled via `disable` prop,
+  -- highlighting will fallback to default Vim syntax highlighting
+  highlight = {
+    enable = true,
+    -- Required for spellcheck, some LaTex highlights and
+    -- code block highlights that do not have ts grammar
+    additional_vim_regex_highlighting = {'org'},
+  },
+  ensure_installed = {'org'}, -- Or run :TSUpdate org
+}
+
+require('orgmode').setup({
+  org_agenda_files = {'~/Dropbox/org/*', '~/my-orgs/**/*'},
+  org_default_notes_file = '~/Dropbox/org/refile.org',
+})
+EOF
