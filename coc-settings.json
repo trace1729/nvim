@@ -2,7 +2,7 @@
 	"coc.preferences.semanticTokensHighlights": false,
 	"coc.preferences.enableFloatHighlight": true,
 	"coc.preferences.snippetStatusText": "Ⓢ ",
-	"coc.preferences.extensionUpdateCheck": "daily",
+	"coc.preferences.extensionUpdateCheck": "weekly",
 	"coc.preferences.messageLevel": "error",
 	"coc.source.around.firstMatch": false,
 	"coc.source.buffer.firstMatch": false,
@@ -276,5 +276,5 @@
 	},
 	"Lua.telemetry.enable": true,
 	"coc.source.vimtex.filetypes": ["tex", "plaintex"],
-	"clangd.disableDiagnostics": false
+	"clangd.disableDiagnostics": true
 }

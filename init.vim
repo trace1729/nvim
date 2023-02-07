@@ -96,6 +96,7 @@ tnoremap <C-O> <C-\><C-N><C-O>
 " ==================== Basic Mappings ====================
 let mapleader=" "
 noremap ; :
+noremap ' `
 nnoremap Q :q<CR>
 nnoremap S :w<CR>
 " Open the vimrc file anytime
@@ -141,13 +142,12 @@ noremap <silent> K 5j
 noremap <silent> J 7h
 noremap <silent> L 7l
 noremap <silent> Z I
-noremap <silent> ; :
+
 
 " visual block mode
 noremap <silent> <C-a> <C-v>
-
 " vnoremap ; :
-vnoremap ' "
+" nnoremap <silent> ' "
 
 " U/E keys for 5 times u/e (faster navigation)
 noremap <silent> I 5k
@@ -171,8 +171,7 @@ source $HOME/.config/nvim/cursor_for_qwerty.vim
 
 " ==================== Insert Mode Cursor Movement ====================
 inoremap <C-a> <ESC>A
-inoremap jj <ESC>
-
+inoremap ,, <ESC>o
 
 
 " ==================== Command Mode Cursor Movement ====================
@@ -214,9 +213,14 @@ noremap srv <C-w>b<C-w>H
 noremap <LEADER>q <C-w>j:q<CR>
 
 
+
+
+
+
+
 " ==================== Tab management ====================
 " Create a new tab with tu
-map tn :tabnew<CR>
+map <leader>n :tabnew<CR>
 map tl :tabnext<CR>
 map th :tabprevious<CR>
 map t0 :tablast<CR>
@@ -233,7 +237,7 @@ autocmd BufRead,BufNewFile *.md setlocal spell
 " Open a new instance of st with the cwd
 nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
 " Opening a terminal window
-noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
+noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res -5<CR>:term<CR>
 " Press space twice to jump to the next '<++>' and edit it
 noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 " Spelling Check with <space>sc
@@ -267,9 +271,9 @@ func! CompileRunGcc()
 		term gcc % -o %< && time ./%<
 	elseif &filetype == 'cpp'
 		set splitbelow
-		exec "!g++ -std=c++11 % -Wall -o %<"
+		exec "!g++ -std=c++17 % -Wall -o %<"
 		:sp
-		:res -15
+		:res -10
 		:term ./%<
 	elseif &filetype == 'cs'
 		set splitbelow
@@ -287,13 +291,15 @@ func! CompileRunGcc()
 	elseif &filetype == 'python'
 		set splitbelow
 		:sp
-		:term python3 %
+        :res -10
+    " :term uvicorn --host localhost --port 8000 %<:app
+		:term python %
 	elseif &filetype == 'html'
 		silent! exec "!".g:mkdp_browser." % &"
 	elseif &filetype == 'markdown'
 		exec "MarkdownPreview"
 	elseif &filetype == 'tex'
-        term zathura %<.pdf
+        term zathura %<.pdf &
 	elseif &filetype == 'dart'
 		exec "CocCommand flutter.run -d ".g:flutter_default_device." ".g:flutter_run_args
 		silent! exec "CocCommand flutter.dev.openDevLog"
@@ -310,6 +316,14 @@ func! CompileRunGcc()
 		set splitbelow
 		:sp
 		:term go run .
+    elseif &filetype == 'Kotlin'
+        set splitbelow
+        :sp
+        :term gradle build && gradle run
+    elsei &filetype == 'rust'
+        set splitbelow
+        :sp
+        :term cargo run
 	endif
 endfunc
 
@@ -320,7 +334,7 @@ call plug#begin('$HOME/.config/nvim/plugged')
 Plug 'itchyny/vim-cursorword'
 
 " Github Copilot
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -342,8 +356,8 @@ Plug 'ibhagwan/fzf-lua'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'kevinhwang91/rnvimr'
-" Plug 'airblade/vim-rooter'
-Plug 'pechorin/any-jump.vim'
+Plug 'airblade/vim-rooter'
+" Plug 'pechorin/any-jump.vim'
 
 
 " Debugger
@@ -361,6 +375,7 @@ Plug 'theniceboy/vim-snippets'
 
 " Undo Tree
 Plug 'mbbill/undotree'
+
 
 " Git
 Plug 'theniceboy/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
@@ -406,7 +421,7 @@ Plug 'pantharshit00/vim-prisma'
 
 " Python
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
+" Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins', 'for' :['python', 'vim-plug'] }
 Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 "Plug 'vim-scripts/indentpython.vim', { 'for' :['python', 'vim-plug'] }
 "Plug 'plytophogy/vim-virtualenv', { 'for' :['python', 'vim-plug'] }
@@ -496,7 +511,17 @@ Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
 Plug 'sainnhe/sonokai'
 Plug 'yegappan/mru'
 Plug 'nvim-orgmode/orgmode'
-" Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-eunuch' " vim sugar for some custom commands like Rename or or sudo write
+Plug 'hrsh7th/nvim-cmp'
+Plug 'udalov/kotlin-vim'
+Plug 'plasticboy/vim-markdown', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+Plug 'rakr/vim-one'
+" Plug 'epwalsh/obsidian.nvim' " vim sugar for some custom commands like Rename or or sudo write
+" Plug 'Leiyi548/vim-im-select'
+" lightspeed plugin map " to start
+
+
 
 call plug#end()
 
@@ -646,10 +671,11 @@ noremap <silent> <leader>ts :CocList tasks<CR>
 "
 imap <C-l> <Plug>(coc-snippets-expand)
 vmap <C-e> <Plug>(coc-snippets-select)
-let g:coc_snippet_next = '<c-j>'
-let g:coc_snippet_prev = '<c-k>'
+let g:coc_snippet_next = '<Tab>'
+let g:coc_snippet_prev = '<S-Tab>'
 imap <C-e> <Plug>(coc-snippets-expand-jump)
 autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
+
 
 
 " ==================== vim-markdown-preview ====================
@@ -866,10 +892,19 @@ noremap <LEADER>gi :FzfGitignore<CR>
 
 
 " ==================== vim-calendar ====================
-"noremap \c :Calendar -position=here<CR>
+noremap \c :Calendar -position=here<CR>
 noremap \\ :Calendar -view=clock -position=here<CR>
-let g:calendar_google_calendar = 1
-let g:calendar_google_task = 1
+
+map <F8> :Calendar<cr>
+let g:calendar_diary = "~/notes/diary/"
+let g:calendar_monday = 1           " 以星期一为开始
+let g:calendar_mruler = '一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月'     " 中文，可自行修改
+let g:calendar_wruler = '日 一 二 三 四 五 六'
+let g:calendar_navi_label = '往前,今日,往后'
+let g:calendar_google_calendar = 0
+let g:calendar_google_task = 0
+
+
 augroup calendar-mappings
 	autocmd!
 	" diamond cursor
@@ -1258,13 +1293,14 @@ let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " cust
 let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 
 
+
 " ==================== lightspeed ====================
 nmap <expr> f reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_f" : "f"
 nmap <expr> F reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_F" : "F"
 nmap <expr> t reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_t" : "t"
 nmap <expr> T reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_T" : "T"
 " autocmd BufEnter * map <buffer> <nowait> { <Plug>Lightspeed_S
-map <nowait> " <Plug>Lightspeed_omni_s
+" map <nowait> " <Plug>Lightspeed_omni_s
 if g:nvim_plugins_installation_completed == 1
 lua <<EOF
 require'lightspeed'.setup {
@@ -1408,12 +1444,13 @@ endif
 
 let g:loaded_wsl_copy_paste = 1
 
-colorscheme sonokai
 
 "============
 "=== vim-mru
 "============
 noremap <silent> <leader>rf :MRU<CR>
+
+colorscheme sonokai
 
 "============
 "=== org mode
@@ -1441,3 +1478,29 @@ require('orgmode').setup({
   org_default_notes_file = '~/Dropbox/org/refile.org',
 })
 EOF
+
+
+"============
+"=== some random demo
+"============
+
+
+"============
+"=== neovide
+"============
+if exists("g:neovide")
+    " Put anything you want to happen only in Neovide here
+    let g:neovide_scale_factor = 0.8
+else
+    "Plug 'Leiyi548/vim-im-select'
+endif
+
+noremap <leader>c :!pandoc % -o %<.pdf --pdf-engine=xelatex -V CJKmainfont=KaiTi<CR>
+" noremap <leader>c :!pandoc % -o %<.pdf --pdf-engine=xelatex -V CJKmainfont=SimSun<CR>
+
+
+"============
+"=== one
+"============
+"colorscheme one
+"set background=light
