@@ -69,8 +69,8 @@
 	"texlab.build.onSave": true,
 	"texlab.build.args": ["-xelatex", "-interaction=nonstopmode", "-synctex=1", "%f"],
 	"snippets.ultisnips.directories": [
-		"$HOME/.vim/Ultisnips/",
-		"$HOME/.vim/plugged/vim-snippets/UltiSnips/"
+		"$HOME/.config/nvim/snippets/",
+		"$HOME/.config/nvim/Ultisnips"
 	],
 	"coc.preferences.formatOnSaveFiletypes": [
 		"javascript",

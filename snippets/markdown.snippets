@@ -1,0 +1,558 @@
+##########
+# GLOBAL #
+##########
+
+global !p
+
+def math():
+    return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def comment():
+    return vim.eval('vimtex#syntax#in_comment()') == '1'
+
+def env(name):
+    [x,y] = vim.eval("vimtex#env#is_inside('" + name + "')")
+    return x != '0' and x != '0'
+
+endglobal
+###################
+# Text formatting #
+###################
+
+snippet * "italics"
+*${1:${VISUAL}}*$0
+endsnippet
+
+snippet ** "bold"
+**${1:${VISUAL}}**$0
+endsnippet
+
+snippet *** "bold italics"
+***${1:${VISUAL}}***$0
+endsnippet
+
+snippet /* "Comment"
+<!-- ${1:${VISUAL}} -->$0
+endsnippet
+
+################
+# Common stuff #
+################
+snippet link "Link to something"
+[${1:${VISUAL:Text}}](${3:https://${2:www.url.com}})$0
+endsnippet
+
+snippet img "Image"
+![${1:pic alt}](${2:path}${3/.+/ "/}${3:opt title}${3/.+/"/})$0
+endsnippet
+
+snippet ilc "Inline Code" i
+\`${1:${VISUAL}}\`$0
+endsnippet
+
+snippet cbl "Codeblock" b
+\`\`\`$1
+${2:${VISUAL}}
+\`\`\`
+$0
+endsnippet
+
+snippet refl "Reference Link"
+[${1:${VISUAL:Text}}][${2:id}]$0
+
+[$2]:${4:https://${3:www.url.com}} "${5:$4}"
+endsnippet
+
+snippet fnt "Footnote"
+[^${1:${VISUAL:Footnote}}]$0
+
+[^$1]:${2:Text}
+endsnippet
+
+snippet detail "Disclosure"
+<details${3: open=""}>
+  ${1:<summary>${2}</summary>}$0
+</details>
+endsnippet
+
+post_jump "create_table(snip)"
+snippet "tb([1-9][1-9])" "Fancy table" br
+`!p snip.rv = match.group(1)`
+endsnippet
+
+########
+# MATH #
+########
+
+context "math()"
+snippet cc "subset" w
+\subset 
+endsnippet
+
+context "math()"
+snippet inn "in " w
+\in 
+endsnippet
+
+context "math()"
+snippet Nn "cap" w
+\cap 
+endsnippet
+
+context "math()"
+snippet UU "cup" w
+\cup 
+endsnippet
+
+context "math()"
+snippet uuu "bigcup" w
+\bigcup_{${1:i \in ${2: I}}} $0
+endsnippet
+
+context "math()"
+snippet nnn "bigcap" w
+\bigcap_{${1:i \in ${2: I}}} $0
+endsnippet
+
+context "math()"
+snippet HH "H" w
+\mathbb{H}
+endsnippet
+
+context "math()"
+snippet DD "D" w
+\mathbb{D}
+endsnippet
+
+context "math()"
+snippet inmath "Inline Math" w
+\\(${1}\\) $0
+endsnippet
+
+context "math()"
+snippet dm "Display Math" w
+\[
+	${1:${VISUAL}}
+\]$0
+endsnippet
+
+context "math()"
+context "math()"
+snippet frac "Fraction" w
+\frac{$1}{$2}$0
+endsnippet
+
+context "math()"
+context "math()"
+snippet compl "Complement" i
+^{c}
+endsnippet
+
+context "math()"
+snippet ss "Super Script" i
+^{$1}$0
+endsnippet
+
+context "math()"
+snippet __ "subscript" Aw
+_{$1}$0
+endsnippet
+
+context "math()"
+snippet srt "Square Root" wi
+\sqrt{${1:${VISUAL}}}$0
+endsnippet
+
+context "math()"
+snippet srto "... Root" wi
+\sqrt[$1]{${2:${VISUAL}}}$0
+endsnippet
+
+context "math()"
+snippet bf "Bold" wi
+\bf{${1:${VISUAL}}}$0
+endsnippet
+
+context "math()"
+snippet it "Italic" wi
+\it{${1:${VISUAL}}}$0
+endsnippet
+
+context "math()"
+snippet un "Underline" wi
+\un{${1:${VISUAL}}}$0
+endsnippet
+
+context "math()"
+snippet rm "Text" wi
+\rm{${1:${VISUAL}}}$0
+endsnippet
+
+context "math()"
+snippet itm "Item" wi
+\item ${0:${VISUAL}}
+endsnippet
+
+context "math()"
+snippet ceil "Ceil" w
+\left\lceil $1 \right\rceil $0
+endsnippet
+
+context "math()"
+snippet floor "Floor" w
+\left\lfloor $1 \right\rfloor$0
+endsnippet
+
+context "math()"
+snippet pmat "Pmat" w
+\begin{pmatrix} $1 \end{pmatrix} $0
+endsnippet
+
+context "math()"
+snippet bmat "Bmat" w
+\begin{bmatrix} $1 \end{bmatrix} $0
+endsnippet
+
+context "math()"
+snippet () "Left( right)" w
+\left( ${1:${VISUAL}} \right) $0
+endsnippet
+
+snippet lr "left( right)" i
+\left( ${1:${VISUAL}} \right) $0
+context "math()"
+endsnippet
+
+snippet lr( "left( right)" i
+\left( ${1:${VISUAL}} \right) $0
+context "math()"
+endsnippet
+
+snippet lr| "left| right|" i
+\left| ${1:${VISUAL}} \right| $0
+context "math()"
+endsnippet
+
+snippet lr{ "left\{ right\}" i
+\left\\{ ${1:${VISUAL}} \right\\} $0
+context "math()"
+endsnippet
+
+snippet lrb "left\{ right\}" i
+\left\\{ ${1:${VISUAL}} \right\\} $0
+context "math()"
+endsnippet
+
+snippet lr[ "left[ right]" i
+\left[ ${1:${VISUAL}} \right] $0
+context "math()"
+endsnippet
+
+snippet lra "leftangle rightangle" wi
+\left<${1:${VISUAL}} \right>$0
+context "math()"
+endsnippet
+
+snippet conj "conjugate" w
+\overline{$1}$0
+context "math()"
+endsnippet
+
+snippet sum "sum" w
+\sum_{n=${1:1}}^{${2:\infty}} ${3:a_n z^n}
+context "math()"
+endsnippet
+
+snippet taylor "taylor" w
+\sum_{${1:k}=${2:0}}^{${3:\infty}} ${4:c_$1} (x-a)^$1 $0
+context "math()"
+endsnippet
+
+snippet lim "limit" w
+\lim_{${1:n} \to ${2:\infty}} 
+endsnippet
+
+snippet limsup "limsup" w
+\limsup_{${1:n} \to ${2:\infty}} 
+endsnippet
+
+snippet prod "product" w
+\prod_{${1:n=${2:1}}}^{${3:\infty}} ${4:${VISUAL}} $0
+endsnippet
+
+snippet part "d/dx" w
+\frac{\partial ${1:V}}{\partial ${2:x}} $0
+endsnippet
+
+snippet ooo "\infty" w
+\infty
+endsnippet
+
+snippet rij "mrij" i
+(${1:x}_${2:n})_{${3:$2}\\in${4:\\N}}$0
+endsnippet
+
+snippet => "Implies" w
+\implies
+endsnippet
+
+snippet =< "Implied by" w
+\impliedby
+endsnippet
+
+snippet iff "iff" w
+\iff
+endsnippet
+
+snippet == "Equals" w
+&= $1 \\\\
+endsnippet
+
+snippet != "Not Equal" w
+\neq 
+endsnippet
+
+snippet <= "leq" Aw
+\le 
+endsnippet
+
+snippet >= "geq" Aw
+\ge 
+endsnippet
+
+snippet nn "Tikz node" w
+\node[$5] (${1/[^0-9a-zA-Z]//g}${2}) ${3:at (${4:0,0}) }{$${1}$};
+$0
+endsnippet
+
+snippet lll "l" Aw
+\ell
+endsnippet
+
+snippet xx "cross" Aw
+\times 
+endsnippet
+
+snippet '(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp)' "ln" rw
+\\`!p snip.rv = match.group(1)`
+endsnippet
+
+snippet <! "normal" Aw
+\triangleleft 
+endsnippet
+
+snippet "(\d|\w)+invs" "inverse" Awr
+`!p snip.rv = match.group(1)`^{-1}
+endsnippet
+
+snippet !> "mapsto" Aw
+\mapsto 
+endsnippet
+
+##########
+# TABLES #
+#########
+
+pre_expand "create_table(snip)"
+snippet "gentbl(\d+)x(\d+)" "Generate table of *width* by *height*" r
+endsnippet
+
+pre_expand "add_row(snip)"
+snippet "tr(\d+)" "Add table row of dimension ..." r
+endsnippet
+
+
+###########
+# POSTFIX #
+###########
+
+snippet bar "bar" wi
+\bar{${1:${VISUAL}}}$0
+endsnippet
+
+snippet "\<(.*?)\|" "bra" wri
+\bra{`!p snip.rv = match.group(1).replace('q', f'\psi').replace('f', f'\phi')`}
+endsnippet
+
+snippet "\|(.*?)\>" "ket" wri
+\ket{`!p snip.rv = match.group(1).replace('q', f'\psi').replace('f', f'\phi')`}
+endsnippet
+
+snippet "(.*)\\bra{(.*?)}([^\|]*?)\>" "braket" Awri
+`!p snip.rv = match.group(1)`\braket{`!p snip.rv = match.group(2)`}{`!p snip.rv = match.group(3).replace('q', f'\psi').replace('f', f'\phi')`}
+endsnippet
+
+
+
+# for auto add subfix
+snippet '([A-Za-z])(\d)' "auto subscript" wrA
+`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+endsnippet
+
+snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+endsnippet
+
+# for fraction
+#snippet // "Fraction" iA
+#\\frac{$1}{$2}$0
+#endsnippet
+
+#snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "Fraction" wrA
+#\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+#endsnippet
+#
+#snippet / "Fraction" iA
+#\\frac{${VISUAL}}{$1}$0
+#endsnippet
+#
+snippet sympy "sympy block " w
+sympy $1 sympy$0
+endsnippet
+
+#priority 10000
+#snippet 'sympy(.*)sympy' "evaluate sympy" wr
+#`!p
+#from sympy import *
+#x, y, z, t = symbols('x y z t')
+#k, m, n = symbols('k m n', integer=True)
+#f, g, h = symbols('f g h', cls=Function)
+#init_printing()
+#snip.rv = eval('latex(' + match.group(1).replace('\\', '') \
+    #.replace('^', '**') \
+    #.replace('{', '(') \
+    #.replace('}', ')') + ')')
+#`
+#endsnippet
+# 上下标
+#snippet sr "^2" iA
+#^2
+#endsnippet
+#
+#snippet cb "^3" iA
+#^3
+#endsnippet
+
+snippet compl "complement" iA
+^{c}
+endsnippet
+
+snippet td "superscript" iA
+^{$1}$0
+endsnippet
+# 变成vector
+snippet "(\\?\w+)(,\.|\.,)" "Vector postfix" riA
+\vec{`!p snip.rv=match.group(1)`}
+endsnippet
+
+# my script
+
+snippet mint "intergal" wi
+\int_{$1}^{$2} $0 
+endsnippet
+
+
+snippet fa "forall" wi
+\forall
+endsnippet
+
+snippet ex "exists" wi
+\exists
+endsnippet
+
+snippet fd "exists" wi
+\sim
+endsnippet
+
+
+snippet neg "neg" wi
+\neg
+endsnippet
+
+
+snippet af "function" wi
+${1:F}(${2:x})$0 
+endsnippet
+
+
+snippet bf "function" wi
+${1:F}(${2:x}, ${3:y}})$0 
+endsnippet
+
+snippet al "alpha" wi
+\alpha
+endsnippet
+
+snippet be "alphabeta" wi
+\beta
+endsnippet
+
+snippet ga "gamma" wi
+\gamma
+endsnippet
+
+
+snippet thre  "alphabeta" wi
+\xi
+endsnippet
+
+snippet la "alphabeta" wi
+\lambda
+endsnippet
+
+snippet del "alphabeta" wi
+\Delta
+endsnippet
+
+snippet mu "alphabeta" wi
+\mu
+endsnippet
+
+snippet rou "alphabeta" wi
+\rho
+endsnippet
+
+
+snippet fi "alphabeta" wi
+\varphi
+endsnippet
+
+snippet three "alphabeta" wi
+\varepsilon
+endsnippet
+
+snippet v "alphabeta" wi
+\vee
+endsnippet
+
+
+snippet dv  "alphabeta" wi
+\wedge
+endsnippet
+
+
+snippet bm  "env" wi
+\begin{align*}
+  $1
+\end{align*}
+endsnippet
+
+snippet t "description"
+\text{$1} $0
+endsnippet 
+    
+
+snippet flowchart "Description" bi
+```mermaid
+graph LF
+		A --> B
+```
+endsnippet
+
+snippet red  "font color"
+<font color='red'>$1 </font> $0
+endsnippet 
+
+snippet set "font color"
+\\{ $1 \\} $0
+endsnippet 
