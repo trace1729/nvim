@@ -1408,5 +1408,33 @@ let g:LanguageClient_serverCommands = {
 
 
 
+""" Manim """
+
+function! GetClassName()
+  let line = getline('.')
+  let match = match(line, '^\s*class\s\+\zs\w\+\ze')
+  if match >= 0
+    return matchstr(line, '\w\+', match)
+  else
+    let lnum = line('.')
+    while lnum > 0
+      let lnum = lnum - 1
+      let line = getline(lnum)
+      let match = match(line, '^\s*class\s\+\zs\w\+\ze')
+      if match >= 0
+        return matchstr(line, '\w\+', match)
+      endif
+    endwhile
+    return ''
+  endif
+endfunction
 
 
+function! RunManim()
+  let filename = expand('%')
+  let classname = GetClassName()
+  let command = '!manim -pqh ' . filename . ' ' . classname
+	exec command
+endfunction
+
+nnoremap <leader><leader>m :call RunManim()<CR>
