@@ -84,8 +84,8 @@
 		"python",
 		"vue",
 		"svelte",
-		"c",
-		"cpp",
+		// "c",
+		// "cpp",
 		"cs",
 		"racket",
 		"prisma",
@@ -215,7 +215,7 @@
 			"settings": {}
 		},
 		"golang": {
-			"command": "gopls",
+			"command": "$HOME/go/bin/gopls",
 			"rootPatterns": ["go.mod"],
 			"filetypes": ["go"]
 		},
@@ -276,5 +276,6 @@
 	},
 	"Lua.telemetry.enable": true,
 	"coc.source.vimtex.filetypes": ["tex", "plaintex"],
-	"clangd.disableDiagnostics": true
+	"clangd.disableDiagnostics": true,
+	"python.analysis.typeCheckingMode": "off"
 }
