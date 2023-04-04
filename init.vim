@@ -86,6 +86,7 @@ set virtualedit=block
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 
+
 " ==================== Terminal Behaviors ====================
 let g:neoterm_autoscroll = 1
 autocmd TermOpen term://* startinsert
@@ -517,6 +518,7 @@ Plug 'udalov/kotlin-vim'
 Plug 'plasticboy/vim-markdown', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 Plug 'rakr/vim-one'
+Plug 'xiyaowong/transparent.nvim'
 " Plug 'epwalsh/obsidian.nvim' " vim sugar for some custom commands like Rename or or sudo write
 " Plug 'Leiyi548/vim-im-select'
 " lightspeed plugin map " to start
@@ -535,7 +537,8 @@ set termguicolors " enable true colors support
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 silent! color deus
 
-hi NonText ctermfg=gray guifg=grey10
+" <++>
+" hi NonText ctermfg=gray guifg=grey10
 "hi SpecialKey ctermfg=blue guifg=grey70
 
 
@@ -1438,3 +1441,6 @@ function! RunManim()
 endfunction
 
 nnoremap <leader><leader>m :call RunManim()<CR>
+
+""" Transparency  """
+" highlight Normal guibg=NONE ctermbg=None
