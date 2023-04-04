@@ -519,6 +519,7 @@ Plug 'plasticboy/vim-markdown', { 'do': { -> mkdp#util#install() }, 'for': ['mar
 
 Plug 'rakr/vim-one'
 Plug 'xiyaowong/transparent.nvim'
+Plug 'ferrine/md-img-paste.vim'
 " Plug 'epwalsh/obsidian.nvim' " vim sugar for some custom commands like Rename or or sudo write
 " Plug 'Leiyi548/vim-im-select'
 " lightspeed plugin map " to start
@@ -1398,6 +1399,7 @@ if has_machine_specific_file == 0
 	exec "e ~/.config/nvim/_machine_specific.vim"
 endif
 
+" Trace
 
 " ==================== latex ====================
 
@@ -1444,3 +1446,17 @@ nnoremap <leader><leader>m :call RunManim()<CR>
 
 """ Transparency  """
 " highlight Normal guibg=NONE ctermbg=None
+
+"""neovide"""
+
+if exists("g:neovide")
+	set guifont=NotoSansMono\ Nerd\ Font:h18
+	let g:neovide_transparency = 0.8
+	let g:transparency = 0.8
+	let g:neovide_background_color = '#0f1117'.printf('%x', float2nr(255 * g:transparency))
+endif
+
+""" image """
+
+autocmd FileType markdown nmap <buffer><silent> <leader><leader>p :call mdip#MarkdownClipboardImage()<CR>
+
