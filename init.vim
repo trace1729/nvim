@@ -231,7 +231,7 @@ map t$ :tabfirst<CR>
 " Snippets
 source $HOME/.config/nvim/md-snippets.vim
 " auto spell
-autocmd BufRead,BufNewFile *.md setlocal spell
+" autocmd BufRead,BufNewFile *.md setlocal spell
 
 
 " ==================== Other useful stuff ====================
@@ -270,9 +270,10 @@ func! CompileRunGcc()
 		:sp
 		:res -5
 		term gcc % -o %< && time ./%<
+		" term make qemu && time ./%<
 	elseif &filetype == 'cpp'
 		set splitbelow
-		exec "!g++ -std=c++17 % -Wall -o %<"
+		exec "!g++ -g -std=c++17 % -Wall -o %<"
 		:sp
 		:res -10
 		:term ./%<
@@ -520,9 +521,9 @@ Plug 'plasticboy/vim-markdown', { 'do': { -> mkdp#util#install() }, 'for': ['mar
 Plug 'rakr/vim-one'
 Plug 'xiyaowong/transparent.nvim'
 Plug 'ferrine/md-img-paste.vim'
-" Plug 'epwalsh/obsidian.nvim' " vim sugar for some custom commands like Rename or or sudo write
-" Plug 'Leiyi548/vim-im-select'
-" lightspeed plugin map " to start
+Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
+" Plug 'epwalsh/obsidian.nvim'
+" Plug 'kaarmu/typst.vim' not mature yet
 
 
 
@@ -1040,27 +1041,27 @@ let g:vmt_fence_closing_text = '/TOC'
 
 
 " ==================== rnvimr ====================
-let g:rnvimr_ex_enable = 1
-let g:rnvimr_pick_enable = 1
-let g:rnvimr_draw_border = 0
-" let g:rnvimr_bw_enable = 1
-highlight link RnvimrNormal CursorLine
-nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
-let g:rnvimr_action = {
-            \ '<C-t>': 'NvimEdit tabedit',
-            \ '<C-x>': 'NvimEdit split',
-            \ '<C-v>': 'NvimEdit vsplit',
-            \ 'gw': 'JumpNvimCwd',
-            \ 'yw': 'EmitRangerCwd'
-            \ }
-let g:rnvimr_layout = { 'relative': 'editor',
-            \ 'width': &columns,
-            \ 'height': &lines,
-            \ 'col': 0,
-            \ 'row': 0,
-            \ 'style': 'minimal' }
-let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
-
+" let g:rnvimr_ex_enable = 1
+" let g:rnvimr_pick_enable = 1
+" let g:rnvimr_draw_border = 0
+" " let g:rnvimr_bw_enable = 1
+" highlight link RnvimrNormal CursorLine
+" nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
+" let g:rnvimr_action = {
+"             \ '<C-t>': 'NvimEdit tabedit',
+"             \ '<C-x>': 'NvimEdit split',
+"             \ '<C-v>': 'NvimEdit vsplit',
+"             \ 'gw': 'JumpNvimCwd',
+"             \ 'yw': 'EmitRangerCwd'
+"             \ }
+" let g:rnvimr_layout = { 'relative': 'editor',
+"             \ 'width': &columns,
+"             \ 'height': &lines,
+"             \ 'col': 0,
+"             \ 'row': 0,
+"             \ 'style': 'minimal' }
+" let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
+"
 
 " ==================== vim-subversive ====================
 nmap s <plug>(SubversiveSubstitute)
@@ -1083,7 +1084,10 @@ noremap gp :AsyncRun git push<CR>
 
 " ==================== AsyncTasks ====================
 let g:asyncrun_open = 6
-
+noremap <silent><f6> :AsyncTask file-run<cr>
+noremap <silent>R :AsyncTask file-run<cr>
+noremap <silent><f7> :AsyncTask file-build<cr>
+noremap <silent>B :AsyncTask file-build<cr>
 
 " ==================== tcomment_vim ====================
 nnoremap ci cl
@@ -1171,7 +1175,7 @@ noremap g# g#<Cmd>lua require('hlslens').start()<CR>
 
 " " ==================== fzf-lua ====================
 noremap <silent> <C-p> :FzfLua files<CR>
-" noremap <silent> <C-f> :Rg<CR>
+noremap <silent> <C-f> :Rg<CR>
 noremap <silent> <C-h> :FzfLua oldfiles cwd=~<CR>
 " " noremap <silent> <C-q> :FzfLua builtin<CR>
 " noremap <silent> <C-t> :FzfLua lines<CR>
@@ -1461,4 +1465,22 @@ endif
 """ image """
 
 autocmd FileType markdown nmap <buffer><silent> <leader><leader>p :call mdip#MarkdownClipboardImage()<CR>
+
+"""anaconda"""
+
+let g:python3_host_prog='/opt/anaconda/bin/python'
+
+
+"""tabnine"""
+lua <<EOF
+require('tabnine').setup({
+  disable_auto_comment=true,
+  accept_keymap="<c-j>",
+  dismiss_keymap = "<C-]>",
+  debounce_ms = 800,
+  suggestion_color = {gui = "#808080", cterm = 244},
+  exclude_filetypes = {"TelescopePrompt"},
+  log_file_path = nil, -- absolute path to Tabnine log file
+})
+EOF
 

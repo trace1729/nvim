@@ -1,24 +1,19 @@
 {
-	"coc.preferences.semanticTokensHighlights": false,
-	"coc.preferences.enableFloatHighlight": true,
-	"coc.preferences.snippetStatusText": "Ⓢ ",
+	// "coc.preferences.semanticTokensHighlights": false,
+	// "coc.preferences.enableFloatHighlight": true,
+	// "coc.preferences.snippetStatusText": "Ⓢ ",
 	"coc.preferences.extensionUpdateCheck": "weekly",
 	"coc.preferences.messageLevel": "error",
-	"coc.source.around.firstMatch": false,
-	"coc.source.buffer.firstMatch": false,
 	"coc.source.syntax.firstMatch": false,
-	"suggest.detailMaxLength": 60,
+	"suggest.labelMaxLength": 60,
 	"suggest.noselect": true,
 	"suggest.enablePreselect": false,
 	"suggest.triggerAfterInsertEnter": true,
 	"suggest.autoTrigger": "always",
 	"suggest.timeout": 5000,
-	"suggest.enablePreview": true,
-	"suggest.floatEnable": true,
 	"suggest.detailField": "preview",
 	"suggest.snippetIndicator": "",
-	"suggest.triggerCompletionWait": 100,
-	"suggest.echodocSupport": true,
+	"suggest.triggerCompletionWait": 50,
 	"suggest.completionItemKindLabels": {
 		"class": "\uf0e8",
 		"color": "\ue22b",
@@ -46,7 +41,6 @@
 		"value": "\uf89f",
 		"variable": "\ue71b"
 	},
-	"diagnostic.signOffset": 1,
 	"diagnostic.errorSign": "\uf467",
 	"diagnostic.warningSign": "\uf071",
 	"diagnostic.infoSign": "\uf129",
@@ -96,7 +90,6 @@
 	"signature.target": "float",
 	"yank.enableCompletion": false,
 	"typescript.suggestionActions.enabled": true,
-	"typescript.format.enabled": true,
 	"jest.watch": false,
 	"explorer.width": 38,
 	"explorer.quitOnOpen": true,
@@ -113,7 +106,6 @@
 	"explorer.file.column.indent.indentLine": true,
 	"explorer.file.showHiddenFiles": true,
 	"explorer.icon.enableNerdfont": true,
-	"explorer.file.column.git.showIgnored": true,
 	"explorer.keyMappingMode": "none",
 	"explorer.buffer.showHiddenBuffers": false,
 	"explorer.keyMappings.global": {
@@ -160,7 +152,6 @@
 		"<<": "gitStage",
 		">>": "gitUnstage"
 	},
-	"java.open.serverLog": false,
 	"flutter.outlineWidth": 40,
 	"flutter.outlineIconPadding": 0,
 	"flutter.UIPath": true,
@@ -168,16 +159,12 @@
 	"flutter.lsp.initialization.onlyAnalyzeProjectsWithOpenFiles": false,
 	"flutter.trace.server": "off",
 	"dart.lineLength": 100,
-	"tslint.autoFixOnSave": false,
-	"python.autoComplete.addBrackets": true,
-	"python.jediEnabled": false,
 	"python.formatting.provider": "yapf",
 	"python.formatting.yapfArgs": [
 		"--style",
 		"{SPACES_AROUND_POWER_OPERATOR: True, SPACES_BEFORE_COMMENT: 1}"
 	],
 	"html.format.enable": true,
-	"javascript.referencesCodeLens.enable": true,
 	"javascript.showUnused": true,
 	"javascript.suggest.names": true,
 	"javascript.suggestionActions.enabled": true,
@@ -189,10 +176,6 @@
 	"prettier.useTabs": true,
 	"prettier.trailingComma": "all",
 	"prettier.singleQuote": false,
-	"todolist.autoUpload": true,
-	"todolist.promptForReminder": false,
-	"coc-actions.hideCursor": false,
-	"coc-actions.showActionKind": true,
 	"diagnostic-languageserver.filetypes": {
 		"vim": "vint",
 		"email": "languagetool",
@@ -274,8 +257,6 @@
 		//}
 		//}
 	},
-	"Lua.telemetry.enable": true,
-	"coc.source.vimtex.filetypes": ["tex", "plaintex"],
 	"clangd.disableDiagnostics": true,
 	"python.analysis.typeCheckingMode": "off"
 }
