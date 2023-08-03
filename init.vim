@@ -43,9 +43,9 @@ set number
 set relativenumber
 set cursorline
 set noexpandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set autoindent
 set list
 set listchars=tab:\|\ ,trail:▫
@@ -79,7 +79,7 @@ if has('persistent_undo')
 	set undofile
 	set undodir=$HOME/.config/nvim/tmp/undo,.
 endif
-set colorcolumn=100
+set colorcolumn=0
 set updatetime=100
 set virtualedit=block
 
@@ -96,12 +96,11 @@ tnoremap <C-O> <C-\><C-N><C-O>
 
 " ==================== Basic Mappings ====================
 let mapleader=" "
-noremap ; :
-noremap ' `
 nnoremap Q :q<CR>
 nnoremap S :w<CR>
 " Open the vimrc file anytime
 nnoremap <LEADER>rc :e $HOME/.config/nvim/init.vim<CR>
+nnoremap <LEADER>sh :e $HOME/.zshrc<CR>
 nnoremap <LEADER>rv :e .nvimrc<CR>
 augroup NVIMRC
     autocmd!
@@ -117,6 +116,7 @@ noremap ,. %
 vnoremap ki $%
 " Search
 noremap <LEADER><CR> :nohlsearch<CR>
+noremap <leader><leader>t :FloatermNew<CR>
 " Adjacent duplicate words
 noremap <LEADER>dw /\(\<\w\+\>\)\_s*\1
 " Space to Tab
@@ -168,7 +168,8 @@ noremap <C-E> 5<C-e>
 " source $HOME/.config/nvim/cursor.vim
 " If you use Qwerty keyboard, uncomment the next line.
 source $HOME/.config/nvim/cursor_for_qwerty.vim
-
+noremap <leader>w :colorscheme shine<CR>
+noremap <leader>b :colorscheme deus<CR>
 
 " ==================== Insert Mode Cursor Movement ====================
 inoremap <C-a> <ESC>A
@@ -236,7 +237,7 @@ source $HOME/.config/nvim/md-snippets.vim
 
 " ==================== Other useful stuff ====================
 " Open a new instance of st with the cwd
-nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'st'<CR><C-\><C-N>:q<CR>
+nnoremap \t :tabe<CR>:-tabmove<CR>:term sh -c 'alacritty'<CR><C-\><C-N>:q<CR>
 " Opening a terminal window
 noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res -5<CR>:term<CR>
 " Press space twice to jump to the next '<++>' and edit it
@@ -244,8 +245,7 @@ noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>"_c4l
 " Spelling Check with <space>sc
 noremap <LEADER>sc :set spell!<CR>
 " Press ` to change case (instead of ~)
-noremap ` ~
-noremap <C-c> zz
+" noremap ` ~
 " Auto change directory to current dir
 autocmd BufEnter * silent! lcd %:p:h
 " Call figlet
@@ -262,7 +262,7 @@ noremap <LEADER>sw :set wrap<CR>
 map <F10> :TSHighlightCapturesUnderCursor<CR>
 
 " Compile function
-noremap r :call CompileRunGcc()<CR>
+noremap x :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
 	if &filetype == 'c'
@@ -510,9 +510,9 @@ Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
 
 " modified by trace 1729
 " Plug 'makerj/vim-pdf'
+" Plug 'liuchengxu/vista' 展示 lsp info
 Plug 'sainnhe/sonokai'
 Plug 'yegappan/mru'
-Plug 'nvim-orgmode/orgmode'
 Plug 'tpope/vim-eunuch' " vim sugar for some custom commands like Rename or or sudo write
 Plug 'hrsh7th/nvim-cmp'
 Plug 'udalov/kotlin-vim'
@@ -522,6 +522,7 @@ Plug 'rakr/vim-one'
 Plug 'xiyaowong/transparent.nvim'
 Plug 'ferrine/md-img-paste.vim'
 Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
+Plug 'voldikss/vim-floaterm'
 " Plug 'epwalsh/obsidian.nvim'
 " Plug 'kaarmu/typst.vim' not mature yet
 
@@ -592,6 +593,7 @@ let g:coc_global_extensions = [
 	\ 'coc-stylelint',
 	\ 'coc-syntax',
 	\ 'coc-tasks',
+	\ 'coc-clangd',
 	\ 'coc-translator',
 	\ 'coc-tsserver',
 	\ 'coc-vetur',
@@ -640,6 +642,7 @@ nnoremap <silent><nowait> <LEADER>d :CocList diagnostics<cr>
 nmap <silent> <LEADER>- <Plug>(coc-diagnostic-prev)
 nmap <silent> <LEADER>= <Plug>(coc-diagnostic-next)
 nnoremap <c-c> :CocCommand<CR>
+nnoremap <leader>cl :CocList outline<CR>
 " Text Objects
 xmap kf <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
@@ -659,7 +662,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
 nmap tt :CocCommand explorer<CR>
 " coc-translator
-nmap ts <Plug>(coc-translator-p)
+nmap <silent> ts <Plug>(coc-translator-p)
 " Remap for do codeAction of selected region
 function! s:cocActionsOpenFromSelected(type) abort
   execute 'CocCommand actions.open ' . a:type
@@ -788,6 +791,7 @@ let g:mkdp_theme = 'light'
 noremap <LEADER>tm :TableModeToggle<CR>
 "let g:table_mode_disable_mappings = 1
 let g:table_mode_cell_text_object_i_map = 'k<Bar>'
+let g:table_mode_delete_row_map = '<Leader>tdc'
 
 
 " ==================== FZF ====================
