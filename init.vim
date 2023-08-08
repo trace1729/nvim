@@ -113,7 +113,6 @@ augroup END
 vnoremap Y "+y
 " Find pair
 noremap ,. %
-vnoremap ki $%
 " Search
 noremap <LEADER><CR> :nohlsearch<CR>
 noremap <leader><leader>t :FloatermNew<CR>
@@ -196,7 +195,7 @@ noremap <SPACE><down>  <C-w>j
 noremap <SPACE><right> <C-w>l
 noremap qf <C-w>o
 " Disable the default s key
-noremap s <nop>
+" noremap s <nop>
 
 " split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
 map sr :set splitright<CR>:vsplit<CR>
