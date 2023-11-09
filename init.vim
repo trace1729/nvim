@@ -142,10 +142,14 @@ noremap <silent> K 5j
 noremap <silent> J 7h
 noremap <silent> L 7l
 noremap <silent> Z I
+noremap <silent> <Up>  <nop>
+noremap <silent> <Down>  <nop>
+noremap <silent> <Left>  <nop>
+noremap <silent> <Right> <nop>
 
 
 " visual block mode
-noremap <silent> <C-a> <C-v>
+" noremap <silent> <C-a> <C-v>
 " vnoremap ; :
 " nnoremap <silent> ' "
 
@@ -178,8 +182,8 @@ inoremap ,, <ESC>o
 " ==================== Command Mode Cursor Movement ====================
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-j> <Down>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <M-b> <S-Left>
@@ -193,9 +197,14 @@ noremap <SPACE><up>   <C-w>k
 noremap <SPACE><left>  <C-w>h
 noremap <SPACE><down>  <C-w>j
 noremap <SPACE><right> <C-w>l
+noremap <SPACE>i  <C-w>k
+noremap <SPACE>j  <C-w>h
+noremap <SPACE>k  <C-w>j
+noremap <SPACE>l  <C-w>l
+noremap qf <C-w>o
 noremap qf <C-w>o
 " Disable the default s key
-" noremap s <nop>
+noremap s <nop>
 
 " split the screens to up (horizontal), down (horizontal), left (vertical), right (vertical)
 map sr :set splitright<CR>:vsplit<CR>
@@ -356,7 +365,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'ibhagwan/fzf-lua'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'kevinhwang91/rnvimr'
+Plug 'kevinhwang91/rnvimr' " for ranger
 Plug 'airblade/vim-rooter'
 " Plug 'pechorin/any-jump.vim'
 
@@ -383,15 +392,15 @@ Plug 'theniceboy/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
 Plug 'theniceboy/fzf-gitignore', { 'do': ':UpdateRemotePlugins' }
 "Plug 'mhinz/vim-signify'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'cohama/agit.vim'
+Plug 'cohama/agit.vim' " see a How a single file change in a git repo
 Plug 'kdheepak/lazygit.nvim'
 
 " Tex
 " Plug 'lervag/vimtex'
 
 " CSharp
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'ctrlpvim/ctrlp.vim' , { 'for': ['cs', 'vim-plug'] } " omnisharp-vim dependency
+" Plug 'OmniSharp/omnisharp-vim'
+" Plug 'ctrlpvim/ctrlp.vim' , { 'for': ['cs', 'vim-plug'] } " omnisharp-vim dependency
 
 " HTML, CSS, JavaScript, Typescript, PHP, JSON, etc.
 Plug 'elzr/vim-json'
@@ -440,7 +449,8 @@ Plug 'tweekmonster/braceless.vim', { 'for' :['python', 'vim-plug'] }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
-Plug 'dkarter/bullets.vim'
+Plug 'dkarter/bullets.vim' 
+" 快速补全列表
 
 " Other filetypes
 Plug 'wlangstroth/vim-racket'
@@ -450,8 +460,8 @@ Plug 'hashivim/vim-terraform'
 " Editor Enhancement
 Plug 'petertriho/nvim-scrollbar'
 Plug 'kevinhwang91/nvim-hlslens'
-Plug 'ggandor/lightspeed.nvim'
-"Plug 'Raimondi/delimitMate'
+" Plug 'ggandor/lightspeed.nvim'
+" Plug 'Raimondi/delimitMate'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mg979/vim-visual-multi'
 Plug 'theniceboy/tcomment_vim' " in <space>cn to comment a line
@@ -468,6 +478,7 @@ Plug 'svermeulen/vim-subversive'
 Plug 'theniceboy/argtextobj.vim'
 Plug 'rhysd/clever-f.vim'
 Plug 'AndrewRadev/splitjoin.vim'
+" split a sentence
 Plug 'theniceboy/pair-maker.vim'
 Plug 'theniceboy/vim-move'
 " Plug 'jeffkreeftmeijer/vim-numbertoggle'
@@ -509,7 +520,7 @@ Plug 'lambdalisue/suda.vim' " do stuff like :sudowrite
 
 " modified by trace 1729
 " Plug 'makerj/vim-pdf'
-" Plug 'liuchengxu/vista' 展示 lsp info
+Plug 'liuchengxu/vista.vim'
 Plug 'sainnhe/sonokai'
 Plug 'yegappan/mru'
 Plug 'tpope/vim-eunuch' " vim sugar for some custom commands like Rename or or sudo write
@@ -820,15 +831,15 @@ let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
 
 
 " ==================== CTRLP (Dependency for omnisharp) ====================
-let g:ctrlp_map = ''
-let g:ctrlp_cmd = 'CtrlP'
-
-" ==================== wildfire ====================
-map <c-b> <Plug>(wildfire-quick-select)
-let g:wildfire_objects = {
-    \ "*" : ["i'", 'i"', "i)", "i]", "i}", "it"],
-    \ "html,xml" : ["at", "it"],
-\ }
+" let g:ctrlp_map = ''
+" let g:ctrlp_cmd = 'CtrlP'
+"
+" " ==================== wildfire ====================
+" map <c-b> <Plug>(wildfire-quick-select)
+" let g:wildfire_objects = {
+"     \ "*" : ["i'", 'i"', "i)", "i]", "i}", "it"],
+"     \ "html,xml" : ["at", "it"],
+" \ }
 
 
 " ==================== Undotree ====================
@@ -840,10 +851,10 @@ let g:undotree_WindowLayout = 2
 let g:undotree_DiffpanelHeight = 8
 let g:undotree_SplitWidth = 24
 function g:Undotree_CustomMap()
-	nmap <buffer> u <plug>UndotreeNextState
-	nmap <buffer> e <plug>UndotreePreviousState
-	nmap <buffer> U 5<plug>UndotreeNextState
-	nmap <buffer> E 5<plug>UndotreePreviousState
+	nmap <buffer> i <plug>UndotreeNextState
+	nmap <buffer> k <plug>UndotreePreviousState
+	nmap <buffer> I 5<plug>UndotreeNextState
+	nmap <buffer> K 5<plug>UndotreePreviousState
 endfunc
 
 
@@ -852,9 +863,7 @@ endfunc
 "let g:VM_default_mappings = 0
 let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
 let g:VM_maps                       = {}
-let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
-let g:VM_maps['i']                  = 'k'
-let g:VM_maps['I']                  = 'K'
+let g:VM_maps['i']                  = 'z'
 let g:VM_maps['Find Under']         = '<C-k>'
 let g:VM_maps['Find Subword Under'] = '<C-k>'
 let g:VM_maps['Find Next']          = ''
@@ -962,22 +971,6 @@ let g:go_highlight_variable_declarations = 0
 let g:go_doc_keywordprg_enabled = 0
 
 
-" ==================== OmniSharp ====================
-let g:OmniSharp_typeLookupInPreview = 1
-let g:omnicomplete_fetch_full_documentation = 1
-let g:OmniSharp_server_use_mono = 1
-let g:OmniSharp_server_stdio = 1
-let g:OmniSharp_highlight_types = 2
-let g:OmniSharp_selector_ui = 'ctrlp'
-autocmd Filetype cs nnoremap <buffer> gd :OmniSharpPreviewDefinition<CR>
-autocmd Filetype cs nnoremap <buffer> gr :OmniSharpFindUsages<CR>
-autocmd Filetype cs nnoremap <buffer> gy :OmniSharpTypeLookup<CR>
-autocmd Filetype cs nnoremap <buffer> ga :OmniSharpGetCodeActions<CR>
-autocmd Filetype cs nnoremap <buffer> <LEADER>rn :OmniSharpRename<CR><C-N>:res +5<CR>
-sign define OmniSharpCodeActions text=💡
-let g:coc_sources_disable_map = { 'cs': ['cs', 'cs-1', 'cs-2', 'cs-3'] }
-
-
 " ==================== goyo ====================
 map <LEADER>gy :Goyo<CR>
 
@@ -1044,27 +1037,27 @@ let g:vmt_fence_closing_text = '/TOC'
 
 
 " ==================== rnvimr ====================
-" let g:rnvimr_ex_enable = 1
-" let g:rnvimr_pick_enable = 1
-" let g:rnvimr_draw_border = 0
-" " let g:rnvimr_bw_enable = 1
-" highlight link RnvimrNormal CursorLine
-" nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
-" let g:rnvimr_action = {
-"             \ '<C-t>': 'NvimEdit tabedit',
-"             \ '<C-x>': 'NvimEdit split',
-"             \ '<C-v>': 'NvimEdit vsplit',
-"             \ 'gw': 'JumpNvimCwd',
-"             \ 'yw': 'EmitRangerCwd'
-"             \ }
-" let g:rnvimr_layout = { 'relative': 'editor',
-"             \ 'width': &columns,
-"             \ 'height': &lines,
-"             \ 'col': 0,
-"             \ 'row': 0,
-"             \ 'style': 'minimal' }
-" let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
-"
+let g:rnvimr_ex_enable = 1
+let g:rnvimr_pick_enable = 1
+let g:rnvimr_draw_border = 0
+" let g:rnvimr_bw_enable = 1
+highlight link RnvimrNormal CursorLine
+nnoremap <silent> <leader>e :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
+let g:rnvimr_action = {
+            \ '<C-t>': 'NvimEdit tabedit',
+            \ '<C-x>': 'NvimEdit split',
+            \ '<C-v>': 'NvimEdit vsplit',
+            \ 'gw': 'JumpNvimCwd',
+            \ 'yw': 'EmitRangerCwd'
+            \ }
+let g:rnvimr_layout = { 'relative': 'editor',
+            \ 'width': &columns,
+            \ 'height': &lines,
+            \ 'col': 0,
+            \ 'row': 0,
+            \ 'style': 'minimal' }
+let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
+
 
 " ==================== vim-subversive ====================
 nmap s <plug>(SubversiveSubstitute)
@@ -1307,36 +1300,6 @@ let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 
 
 
-" ==================== lightspeed ====================
-nmap <expr> f reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_f" : "f"
-nmap <expr> F reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_F" : "F"
-nmap <expr> t reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_t" : "t"
-nmap <expr> T reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_T" : "T"
-" autocmd BufEnter * map <buffer> <nowait> { <Plug>Lightspeed_S
-" map <nowait> " <Plug>Lightspeed_omni_s
-if g:nvim_plugins_installation_completed == 1
-lua <<EOF
-require'lightspeed'.setup {
-  ignore_case = true,
-  -- exit_after_idle_msecs = { unlabeled = 1000, labeled = nil },
-  -- --- s/x ---
-  -- jump_to_unique_chars = { safety_timeout = 400 },
-  -- match_only_the_start_of_same_char_seqs = true,
-  force_beacons_into_match_width = true,
-  -- -- Display characters in a custom way in the highlighted matches.
-  -- substitute_chars = { ['\r'] = '¬', },
-  -- -- Leaving the appropriate list empty effectively disables "smart" mode,
-  -- -- and forces auto-jump to be on or off.
-  safe_labels= {"a", "r", "s", "t", "n", "e", "i", "o", "w", "f", "u", "y", "x", 'c', "v", "k", "m"},
-  -- labels = {},
-  special_keys = {
-    next_match_group = '<space>',
-    prev_match_group = '<tab>',
-  },
-}
-EOF
-endif
-
 " ==================== copilot.nvim ====================
 "let g:copilot_enabled = 1
 "nnoremap <silent> <leader>go :Copilot<CR>
@@ -1447,7 +1410,7 @@ endfunction
 function! RunManim()
   let filename = expand('%')
   let classname = GetClassName()
-  let command = '!manim -pqh ' . filename . ' ' . classname
+  let command = '!~/.py/bin/manimgl ' . filename . ' ' . classname
 	exec command
 endfunction
 
@@ -1473,6 +1436,8 @@ autocmd FileType markdown nmap <buffer><silent> <leader><leader>p :call mdip#Mar
 
 let g:python3_host_prog='/opt/anaconda/bin/python'
 
+"""=====================vista
+let g:vista_disable_statusline = 1
 
 """tabnine"""
 lua <<EOF

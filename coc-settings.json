@@ -109,19 +109,19 @@
 	"explorer.keyMappingMode": "none",
 	"explorer.buffer.showHiddenBuffers": false,
 	"explorer.keyMappings.global": {
-		"u": "nodePrev",
-		"e": "nodeNext",
+		"i": "nodePrev",
+		"k": "nodeNext",
 		"h": "toggleSelection",
 		"<tab>": "actionMenu",
 		"gl": "expandRecursive",
 		"gh": "collapseRecursive",
-		"i": ["wait", "expandable?", "expand", "open"],
+		// "i": ["wait", "expandable?", "expand", "open"],
 		"<cr>": ["wait", "expandable?", "cd", "open"],
 		"I": "open:vsplit",
 		"o": ["wait", "expanded?", "collapse", "expand"],
 		"O": "open:tab",
 		"n": "collapse",
-		"l": "gotoParent",
+		"j": "gotoParent",
 		"yp": "copyFilepath",
 		"yn": "copyFilename",
 		"yy": "copyFile",
@@ -129,7 +129,7 @@
 		"pp": "pasteFile",
 		"dD": "deleteForever",
 		"a": "addFile",
-		"k": "addFile",
+		// "k": "addFile",
 		"M": "addDirectory",
 		"cw": "rename",
 		".": "toggleHidden",
@@ -250,9 +250,11 @@
 		//}
 		//}
 	},
-	"clangd.disableDiagnostics": true,
+	"clangd.disableDiagnostics": false,
+	"semanticTokens.enable": true,
 	"rust-analyzer.enable": true,
 	"rust-analyzer.lens.enable": true,
 	"rust-analyzer.lens.run.enable": false,
-	"rust-analyzer.lens.debug.enable": false
+	"rust-analyzer.lens.debug.enable": false,
+	"snippets.ultisnips.pythonPrompt": false
 }
