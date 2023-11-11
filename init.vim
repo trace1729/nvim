@@ -531,7 +531,7 @@ Plug 'plasticboy/vim-markdown', { 'do': { -> mkdp#util#install() }, 'for': ['mar
 Plug 'rakr/vim-one'
 Plug 'xiyaowong/transparent.nvim'
 Plug 'ferrine/md-img-paste.vim'
-Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
+" Plug 'codota/tabnine-nvim', { 'do': './dl_binaries.sh' }
 Plug 'voldikss/vim-floaterm'
 " Plug 'epwalsh/obsidian.nvim'
 " Plug 'kaarmu/typst.vim' not mature yet
@@ -1439,16 +1439,4 @@ let g:python3_host_prog='/opt/anaconda/bin/python'
 """=====================vista
 let g:vista_disable_statusline = 1
 
-"""tabnine"""
-lua <<EOF
-require('tabnine').setup({
-  disable_auto_comment=true,
-  accept_keymap="<c-j>",
-  dismiss_keymap = "<C-]>",
-  debounce_ms = 800,
-  suggestion_color = {gui = "#808080", cterm = 244},
-  exclude_filetypes = {"TelescopePrompt"},
-  log_file_path = nil, -- absolute path to Tabnine log file
-})
-EOF
 
