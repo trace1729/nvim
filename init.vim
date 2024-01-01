@@ -1173,12 +1173,11 @@ noremap g# g#<Cmd>lua require('hlslens').start()<CR>
 noremap <silent> <C-p> :FzfLua files<CR>
 noremap <silent> <C-f> :Rg<CR>
 noremap <silent> <C-h> :FzfLua oldfiles cwd=~<CR>
-" " noremap <silent> <C-q> :FzfLua builtin<CR>
-" noremap <silent> <C-t> :FzfLua lines<CR>
-"
-" " noremap <silent> <C-x> :FzfLua resume<CR>
+noremap <silent> <C-t> :FzfLua tabs<CR>
+noremap <silent> <C-x> :FzfLua lines<CR>
+"noremap <silent> <C-x> :FzfLua resume<CR>
 " "noremap <silent> z= :FzfLua spell_suggest<CR>
-" " noremap <silent> <C-w> :FzfLua buffers<CR>
+"noremap <silent> <C-w> :FzfLua buffers<CR>
 noremap <leader>; :History:<CR>
 augroup fzf_commands
   autocmd!
@@ -1438,5 +1437,5 @@ let g:python3_host_prog='/opt/anaconda/bin/python'
 
 """=====================vista
 let g:vista_disable_statusline = 1
-
+noremap <silent> <leader>v :Vista coc<CR>
 

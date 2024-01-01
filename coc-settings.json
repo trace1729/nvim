@@ -120,7 +120,7 @@
 		"I": "open:vsplit",
 		"o": ["wait", "expanded?", "collapse", "expand"],
 		"O": "open:tab",
-		"n": "collapse",
+		// "n": "collapse",
 		"j": "gotoParent",
 		"yp": "copyFilepath",
 		"yn": "copyFilename",
@@ -256,5 +256,7 @@
 	"rust-analyzer.lens.enable": true,
 	"rust-analyzer.lens.run.enable": false,
 	"rust-analyzer.lens.debug.enable": false,
-	"snippets.ultisnips.pythonPrompt": false
+	"snippets.ultisnips.pythonPrompt": false,
+	"metals.millScript": "/home/trace/.local/bin/mill"
+	// "solargraph.diagnostics": true
 }
