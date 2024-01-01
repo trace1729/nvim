@@ -1294,7 +1294,7 @@ augroup end
 noremap <c-g> :LazyGit<CR>
 let g:lazygit_floating_window_winblend = 0 " transparency of floating window
 let g:lazygit_floating_window_scaling_factor = 1.0 " scaling factor for floating window
-let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+let g:lazygit_floating_window_border_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
 let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 
 
@@ -1438,4 +1438,8 @@ let g:python3_host_prog='/opt/anaconda/bin/python'
 """=====================vista
 let g:vista_disable_statusline = 1
 noremap <silent> <leader>v :Vista coc<CR>
+
+lua <<EOF
+require("nvim-treesitter.install").prefer_git = true
+EOF
 
