@@ -344,7 +344,7 @@ call plug#begin('$HOME/.config/nvim/plugged')
 Plug 'itchyny/vim-cursorword'
 
 " Github Copilot
-" Plug 'github/copilot.vim'
+Plug 'github/copilot.vim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -1040,7 +1040,7 @@ let g:vmt_fence_closing_text = '/TOC'
 let g:rnvimr_ex_enable = 1
 let g:rnvimr_pick_enable = 1
 let g:rnvimr_draw_border = 0
-" let g:rnvimr_bw_enable = 1
+let g:rnvimr_bw_enable = 1
 highlight link RnvimrNormal CursorLine
 nnoremap <silent> <leader>e :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
 let g:rnvimr_action = {
@@ -1300,13 +1300,13 @@ let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 
 
 " ==================== copilot.nvim ====================
-"let g:copilot_enabled = 1
-"nnoremap <silent> <leader>go :Copilot<CR>
-"nnoremap <silent> <leader>ge :Copilot enable<CR>
-"nnoremap <silent> <leader>gd :Copilot disable<CR>
-"" inoremap <c-p> <Plug>(copilot-suggest)
-"imap <silent><script><expr> <C-C> copilot#Accept("")
-"let g:copilot_no_tab_map = v:true
+let g:copilot_enabled = 1
+nnoremap <silent> <leader>go :Copilot<CR>
+nnoremap <silent> <leader>ge :Copilot enable<CR>
+nnoremap <silent> <leader>gd :Copilot disable<CR>
+" inoremap <c-p> <Plug>(copilot-suggest)
+imap <silent><script><expr> <C-C> copilot#Accept("")
+let g:copilot_no_tab_map = v:true
 
 
 " ==================== nvim-colorizer.lua ====================

@@ -194,13 +194,17 @@
 			"command": "$HOME/go/bin/gopls",
 			"rootPatterns": ["go.mod"],
 			"filetypes": ["go"]
-		}
-		// "bash": {
-		// 	"command": "bash-language-server",
-		// 	"args": ["start"],
-		// 	"filetypes": ["sh"],
-		// 	"ignoredRootPaths": []
+		},
+		// "svls": {
+		// 	"command": "svls",
+		// 	"filetypes": ["verilog", "systemverilog"]
 		// },
+		"bash": {
+			"command": "bash-language-server",
+			"args": ["start"],
+			"filetypes": ["sh"],
+			"ignoredRootPaths": []
+		}
 		// "haskell": {
 		// 	"command": "haskell-language-server-wrapper",
 		// 	"args": ["--lsp"],
@@ -256,7 +260,6 @@
 	"rust-analyzer.lens.enable": true,
 	"rust-analyzer.lens.run.enable": false,
 	"rust-analyzer.lens.debug.enable": false,
-	"snippets.ultisnips.pythonPrompt": false,
-	"metals.millScript": "/home/trace/.local/bin/mill"
+	"snippets.ultisnips.pythonPrompt": false
 	// "solargraph.diagnostics": true
 }
